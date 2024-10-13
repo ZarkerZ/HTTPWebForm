@@ -11,7 +11,24 @@ namespace HTTPWebForm
     {
         protected void Page_Load(object sender, EventArgs e)
         {
+            string username = Request.QueryString["username"];
 
+            username = HttpUtility.HtmlEncode(username);
+
+            if (!string.IsNullOrEmpty(username))
+            {
+                string greeting = $"Welcome to my humble abode, {username}!";
+                greetingLabel.Text = greeting;
+            }
+            else
+            {
+                greetingLabel.Text = "Welcome!";
+            }
+        }
+        protected void logoutButton_Click(object sender, EventArgs e)
+        {
+            Session.Abandon();
+            Response.Redirect("LoginPage.aspx");
         }
     }
 }
